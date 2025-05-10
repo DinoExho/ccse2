@@ -1,0 +1,70 @@
+{% extends '/customer/base.html' %}
+
+{% block header %} <form action="{{ url_for('changecurrency')}}" method="post">
+    <input type="hidden" name="redirectpage" value="/cart">
+    <select id="currency" name="currency" onchange='this.form.submit();'>
+      <option value="0" {% if currency == '0' %} selected {% endif %}>USD</option>
+      <option value="1" {% if currency == '1' %} selected {% endif %}>EUR</option>
+      <option value="2" {% if currency == '2' %} selected {% endif %}>JPY</option>
+      <option value="3" {% if currency == '3' %} selected {% endif %}>GBP</option>
+      <option value="4" {% if currency == '4' %} selected {% endif %}>AUD</option>
+      <option value="5" {% if currency == '5' %} selected {% endif %}>CAD</option>
+      <option value="6" {% if currency == '6' %} selected {% endif %}>CHF</option>
+      <option value="7" {% if currency == '7' %} selected {% endif %}>CNY</option>
+    </select>
+  </form>{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <div class="cart-header">Your Cart</div>
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if numberproducts != 0 %}
+                {% for product in products %}
+                    {% for stock in productstock %}
+                        {% if product.name == stock.name %}
+                            <tr>
+                                <td>{{ product.name }}</td>
+                                <td>
+                                    <form action="{{ url_for('update_cart') }}" method="post">
+                                        <input type="hidden" id="product_name" name="product_name" value="{{ product.name }}">
+                                        <input type="number" id="quantity" name="quantity" min="1" max="{{ stock.stock }}" onchange='if(this.value != 0) { this.form.submit(); }' value="{{ product.quantity }}" required>
+                                    </form>
+                                </td>
+                                {% set result = product.total|float * rate|float  %}
+                                <td>{{ symbol }}{{ result|round(2) }}</td>
+                                <td>
+                                    <form action="{{ url_for('remove_from_cart') }}" method="post" class="cart-item-remove">
+                                        <input type="hidden" id="product_name" name="product_name" value="{{ product.name }}">
+                                        <button type="submit">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">Your cart is empty.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% if allowcheckout %}
+    <div class="cart-total">Total: {{ symbol }}{{ totalprice|round(2) }}</div>
+    <div class="cart-checkout">
+        <a href="{{ url_for('checkout') }}">
+            <button>Checkout</button>
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

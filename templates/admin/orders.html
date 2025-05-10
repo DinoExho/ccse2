@@ -1,0 +1,73 @@
+{%extends '/admin/adminbase.html'%}
+
+{% block content %}
+<div class="filter-wrapper">
+<div class="filterheader">
+<h2>Manage Orders</h2>
+</div>
+<div class="filterstyle">
+<form method="post" action="{{ url_for('orderfilter') }}">
+    <label for="sorter">Sort by:</label>
+    <select id="sorter" name="sorter">
+        <option value="ref_number">Reference Number</option>
+        <option value="order_date">Order Date</option>
+        <option value="shipping_date">Shipping Date</option>
+        <option value="customer_id">Customer ID</option>
+        <option value="status">Status</option>
+    </select>
+
+    <label for="order">Order:</label>
+    <select id="order" name="order">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+
+    <label for="searchitem">Search:</label>
+    <input type="text" id="searchitem" name="searchitem">
+
+    <button type="submit">Filter</button>
+</form>   
+</div>
+
+
+{% if orders %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Order Number</th>
+                <th>Total (£)</th>
+                <th>Order Date</th>
+                <th>Shipping Date</th>
+                <th>Customer ID</th>
+                <th> Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td><a href="{{ url_for('adminvieweditorder', order_id=order.id) }}">{{order.ref_number}}</a> </td>
+                    <td>{{order.total_price}}</td>
+                    <td>{{ order.order_date.strftime('%d-%m-%Y') }}</td>
+                    <td>{{ order.shipping_date.strftime('%d-%m-%Y') }}</td>
+                    <td>{{order.customer_id}}</td>
+                    <td>
+                        <form action="{{ url_for('adminupdatestatus', order_id=order.id) }}" method="post">
+                            <select id="status" name="status" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                <option value="paid" {% if order.status == 'paid' %} selected {% endif %}>Paid</option>
+                                <option value="processing" {% if order.status == 'processing' %} selected {% endif %}>Processing</option>
+                                <option value="shipped" {% if order.status == 'shipped' %} selected {% endif %}>Shipped</option>
+                                <option value="delivered" {% if order.status == 'delivered' %} selected {% endif %}>Delivered</option>
+                                <option value="cancelled" {% if order.status == 'cancelled' %} selected {% endif %}>Cancelled</option>
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock%}

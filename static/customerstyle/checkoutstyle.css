@@ -1,0 +1,109 @@
+.checkout-page {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  margin: 30px;
+}
+
+h2 {
+  font-size: 50px;
+  text-align: center;
+}
+
+  .order-items {
+    background-color: #ffb81e;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 24px;
+    margin-left: 300px;
+    margin-bottom: 20px;
+    margin-right: 50px;
+  }
+  
+  .order-items .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  
+  .order-items .table th, .order-items .table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #575656;
+  }
+  
+  .order-items .table th {
+    font-size: 18px;
+  }
+  
+  .order-items .table td {
+    font-size: 16px;
+  }
+  
+  .order-items .pricing {
+    text-align: right;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+
+  .checkout-container {
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .checkout-container .columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .checkout-container .column {
+    flex: 1;
+    background-color: #ffb81e;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .checkout-container h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .checkout-container label {
+    font-size: 16px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  
+  .checkout-container input,
+  .checkout-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+  .checkout-page .checkout-container button {
+    background-color: #d1b500;
+    color: #000;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .checkout-page .checkout-container button:hover {
+    background-color: #bfa000;
+    transform: scale(1.05);
+  }
+
+  .errors {
+    color: red;
+  }

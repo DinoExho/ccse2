@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin | SecureCart</title>
+    <link rel="stylesheet" href="/static/adminstyle/adminstyle.css">
+    <link rel="stylesheet" href="/static/adminstyle/indexstyle.css">
+    <link rel="stylesheet" href="/static/adminstyle/adminproductstyle.css">
+    <link rel="stylesheet" href="/static/adminstyle/updatestyle.css">
+    <link rel="stylesheet" href="/static/adminstyle/orderstyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <script src="https://kit.fontawesome.com/cfe524a4f9.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="sidebar">
+        <div class="header">
+            Admin Dashboard
+          </div>
+          
+        <div class="logo">
+            <a href="/admin"><img src="/static/uploads/securecart.webp" alt="SecureCart"></a>
+        </div>
+
+        <div class="nav">
+            <a href="/admin">Home</a>
+            <br>
+            <a href="/admin/products">Products</a>
+            <br>
+            <a href="/admin/orders">Orders</a>
+        </div>
+        <a href="{{ url_for('adminlogout') }}">
+            <button>Logout</button>
+        </a>
+    </div>
+    <div class="main-content">
+        <div class="content">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+</body>
+
+</html>

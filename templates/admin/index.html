@@ -1,0 +1,130 @@
+{%extends '/admin/adminbase.html'%}
+
+{% block content %}
+<div class="container">
+<div class="admins">
+    <h2>Admin Accounts</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Forename</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%if admins != 0 %}
+                {% for admin in admins %}
+                <tr>
+                    <td>{{admin.id}}</td>
+                    <td>{{admin.forename}}</td>
+                    <td>{{admin.email}}</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    </div>
+
+    <div class="create">
+        <h2>Create Admin</h2>
+    <form action="{{ url_for('createadmin') }}" method="post">
+        <label for="forename">Forename</label>
+        <input type="text" id="forename" name="forename">
+    
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email">
+    
+        <label for="password">Password</label>
+        <input type="text" id="password" name="password">
+    
+            <button type="submit">Create Admin</button>
+    </form>
+    {% if message %}
+    {{ message }}
+    {% endif %}
+    </div>
+
+    
+<div class="logins">
+    <h2>Recent Login Attempts</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th> Account</th>
+                <th>IP</th>
+                <th>Attempts</th>
+                <th>Details</th>
+                <th>Severity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%if recentloginattempts != 0 %}
+                {% for attempt in recentloginattempts %}
+                <tr>
+                    <td>{{attempt.timestamp}}</td>
+                    <td>{{attempt.admin_id}}</td>
+                    <td>{{attempt.ip_address}}</td>
+                    <td>{{attempt.attempts}}</td>
+                    <td>{{attempt.action_details}}</td>
+                    <td>{{attempt.severity}}</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    </div>
+
+
+<div class="sales">
+<h2>Sales Report</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price (£)</th>
+            <th>Revenue (£)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%if salesreport != 0 %}
+            {% for sale in salesreport %}
+            <tr>
+                <td>{{sale.name}}</td>
+                <td>{{sale.quantity}}</td>
+                <td>{{sale.price}}</td>
+                <td>{{sale.total}}</td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>
+</div>
+
+<div class="stock">
+<h2>Low Stock</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%if lowstock != 0 %}
+            {% for product in lowstock %}
+            <tr>
+                <td><img src="{{ product.image }}" alt="Product Image"></td>
+                <td>{{product.name}}</td>
+                <td>{{product.stock}}</td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>
+</div>
+</div>
+{% endblock %}

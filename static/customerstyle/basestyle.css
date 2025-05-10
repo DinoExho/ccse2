@@ -1,0 +1,154 @@
+html{
+  position:relative; 
+  min-height: 100%;
+  margin:0;
+  padding:0;
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+  margin:0;
+  padding:0;
+  background-color: #faea93;
+}
+
+main{
+  margin-bottom:100px;
+  background-color: #faea93;
+} 
+
+.header {
+  padding: 15px;
+  background: #ffb81e;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header .logo {
+  margin-right: 20px;
+}
+
+.header .logo img {
+  max-height: 75px;
+  display: inline-block;
+}
+
+.header .nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.header .nav a {
+  color: #000000;
+  font-size: 35px;
+  text-decoration: none;
+  margin-inline: 20px;
+}
+
+.header .nav a:hover {
+  color: #8f8f8f;
+}
+
+.cart {
+  display: flex;
+  align-items: center;
+}
+
+.cart form {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.cart select {
+  background-color: #ffb81e;
+  color: #000000;
+  border: none;
+  font-size: 20px;
+}
+
+.cart a {
+  color: #000000;
+  font-size: 20px;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.cart a:hover {
+  color: #8f8f8f;
+}
+
+h1 {
+  text-align: center;
+  font-size: 50px;
+}
+
+.footer {
+background-color: lightgray;
+  padding: 30px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+  .footer a{
+    text-decoration: none;
+    color: gray;
+  }
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 50px;
+}
+
+.productcard {
+  display: inline-block;
+  background-color: #8f8f8f;
+  width: 263px;
+  height: 350px;
+  text-align: center;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border: 2px solid black;
+  border-radius: 8px;
+}
+
+  .productcard img{
+    padding-top: 5%;
+    max-height: 150px;
+  }
+
+  .productcard a{
+    color: #000000;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .productcard a:hover{
+    text-decoration: underline;
+  }
+
+  .productcard .price{
+    font-size: 20px;
+  }
+
+  .productcard .stockleft{
+    font-size: 20px;
+    color: red;
+    font-weight: bold;
+  }
+  .productcard button{
+    background-color: #ffb81e;
+    color: #000000;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 5px;
+  }

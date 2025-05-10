@@ -1,0 +1,71 @@
+.newedit-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #007bb5; 
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.newedit-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.newedit-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.newedit-container label {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.newedit-container input,
+.newedit-container select,
+.newedit-container textarea {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.newedit-container table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.newedit-container button {
+  background-color: #005f8a;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.newedit-container .button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.newedit-container button:hover {
+  background-color: #004a6e; 
+}
+
+.newedit-container .delete {
+  background-color: #d9534f; 
+}
+
+.newedit-container .delete:hover {
+  background-color: #c9302c; 
+}

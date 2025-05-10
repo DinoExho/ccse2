@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SecureCart</title>
+    <link rel="stylesheet" href="/static/customerstyle/basestyle.css">
+    <link rel="stylesheet" href="/static/customerstyle/cartstyle.css">
+    <link rel="stylesheet" href="/static/customerstyle/faqstyle.css">
+    <link rel="stylesheet" href="/static/customerstyle/trackstyle.css">
+    <link rel="stylesheet" href="/static/customerstyle/productstyle.css">
+    <link rel="stylesheet" href="/static/customerstyle/checkoutstyle.css">
+    <link rel="stylesheet" href="/static/customerstyle/completestyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <script src="https://kit.fontawesome.com/cfe524a4f9.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <a href="/home"><img src="/static/uploads/securecart.webp" alt="SecureCart"></a>
+  </div>
+  <div class="nav">
+    <a href="/home">Home</a>
+    <a href="/trackorder">Track Orders</a>
+    <a href="/faq">FAQ</a>
+  </div>
+    <div class="cart">
+      {% block header %} {% endblock %}
+        <a href="/cart">
+          <i class="fa-solid fa-cart-shopping"> </i>
+        </a>
+    </div>
+</div>
+<main>
+    {% block content %}
+    {% endblock %}
+      
+</main>
+
+<div class="footer">
+<footer>
+<a href="/admin/login">Admin Login</a>
+</footer>
+</div>
+</body>
+
+</html>

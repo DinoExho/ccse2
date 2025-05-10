@@ -1,0 +1,56 @@
+{%extends '/customer/base.html'%}
+
+{% block content %}
+{% block header %} <form action="{{ url_for('changecurrency')}}" method="post">
+    <input type="hidden" name="redirectpage" value="/product/<int:product_id>">
+        <select id="currency" name="currency" onchange='this.form.submit();'>
+      <option value="0" {% if currency == '0' %} selected {% endif %}>USD</option>
+      <option value="1" {% if currency == '1' %} selected {% endif %}>EUR</option>
+      <option value="2" {% if currency == '2' %} selected {% endif %}>JPY</option>
+      <option value="3" {% if currency == '3' %} selected {% endif %}>GBP</option>
+      <option value="4" {% if currency == '4' %} selected {% endif %}>AUD</option>
+      <option value="5" {% if currency == '5' %} selected {% endif %}>CAD</option>
+      <option value="6" {% if currency == '6' %} selected {% endif %}>CHF</option>
+      <option value="7" {% if currency == '7' %} selected {% endif %}>CNY</option>
+    </select>
+  </form>{% endblock %}
+
+<div class="product-wrapper">
+<div class="product-container">
+<h1>{{ product.name }}</h1>
+<br>
+<img src="{{ product.image }}" alt="Product Image">
+<p>{{ product.description }}</p>
+    <br>
+    {% if added %}
+        <a href="/cart" class="greenadded"> Added to Cart </a>
+        <br>
+    {% endif %}
+    {% set result = product.price|float * rate|float  %}
+    <strong>Price: {{symbol}}{{ result|round(2) }}</strong>
+    <br>
+    {% if product.stock > 10 %}
+        <form method="post" action="{{ url_for('addedtocart', product_id=product.id) }}">
+            <input type="hidden" id="identifier" name="identifier" value="identifier">
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" max="10", value="1">
+
+            <button type="submit">Add to cart</button>
+        </form>
+    {% elif product.stock > 0 %}
+        <form method="post" action="{{ url_for('addedtocart', product_id=product.id) }}">
+            <input type="hidden" id="identifier" name="identifier" value="identifier">
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" max="{{ product.stock }}", value="1">
+
+            <button type="submit">Add to cart</button>
+            <p>Only {{ product.stock }} left</p>
+        </form>
+    {% else %}
+        <p>Out of stock</p>
+    {% endif %}
+</div>
+</div>
+{%endblock%}

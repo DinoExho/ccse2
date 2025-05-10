@@ -1,0 +1,53 @@
+{%extends '/admin/adminbase.html'%}
+
+{%block content%}
+<div class="filter-wrapper">
+
+<div class="filterheader">
+<h2>Manage Products</h2>
+</div>
+
+<div class="addnew">
+<a href="{{ url_for('adminaddproduct') }}">
+    <button>Add Product</button>
+</a>
+</div>
+
+{%if products != None %}
+<div class="filterstyle">
+<form method="post" action="{{ url_for('productfilter') }}">
+    <label for="sorter">Sort by:</label>
+    <select id="sorter" name="sorter">
+        <option value="name">Name</option>
+        <option value="colour">Colour</option>
+        <option value="stock">Stock</option>
+    </select>
+
+
+    <label for="order">Order:</label>
+    <select id="order" name="order">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+
+    <label for="searchitem">Search:</label>
+    <input type="text" id="searchitem" name="searchitem">
+
+    <button type="submit">Filter</button>
+
+</form>   
+</div>
+<div class="adminproducts">
+    {% for product in products %}
+        <div class="product-container">
+        <a href="{{ url_for('admineditproduct', product_id=product.id) }}">
+            <img src="{{ product.image }}" alt="Product Image">
+        <br>
+        {{ product.name }}</a>
+        </div>
+    {% endfor %}
+    {% endif %}
+</div>
+</div>
+
+{% endblock%}

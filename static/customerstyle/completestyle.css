@@ -1,0 +1,38 @@
+.complete-container {
+    background-color: #ffb81e;
+    max-width: 800px;
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .complete-container h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .complete-container p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .complete-container a {
+    background-color: #ffb81e; 
+    color: #000;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .complete-container a:hover {
+    background-color: #e5c700; 
+  }

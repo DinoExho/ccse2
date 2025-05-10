@@ -1,0 +1,53 @@
+{%extends '/customer/base.html'%}
+
+{% block header %} <form action="{{ url_for('changecurrency')}}" method="post">
+    <input type="hidden" name="redirectpage" value="/home">
+    <select id="currency" name="currency" onchange='this.form.submit();'>
+      <option value="0" {% if currency == '0' %} selected {% endif %}>USD</option>
+      <option value="1" {% if currency == '1' %} selected {% endif %}>EUR</option>
+      <option value="2" {% if currency == '2' %} selected {% endif %}>JPY</option>
+      <option value="3" {% if currency == '3' %} selected {% endif %}>GBP</option>
+      <option value="4" {% if currency == '4' %} selected {% endif %}>AUD</option>
+      <option value="5" {% if currency == '5' %} selected {% endif %}>CAD</option>
+      <option value="6" {% if currency == '6' %} selected {% endif %}>CHF</option>
+      <option value="7" {% if currency == '7' %} selected {% endif %}>CNY</option>
+    </select>
+  </form>{% endblock %}
+
+{% block content %}
+<h1>Products</h1>
+    {%if products != None %}
+    <div class="cards">
+    {% for product in products %}
+    <div class="productcard">
+    <a href="{{ url_for('product_detail', product_id=product.id) }}">
+    <img src="{{ product.image }}" alt="Product Image">
+    <br>
+        {{ product.name }}
+        {% set result = product.price|float * rate|float  %}
+        <div class="price">
+            <p>{{symbol}}{{ result|round(2) }}</p>
+        </div>
+        {% if product.stock > 10 %}
+            <form method="post" action="{{ url_for('addedtocart', product_id=product.id) }}">
+                <input type="hidden" id="quantity" name="quantity" value="1">
+                <button type="submit">Add to cart</button>
+            </form>
+        {% elif product.stock > 0 %}
+            <form method="post" action="{{ url_for('addedtocart', product_id=product.id) }}">
+                <input type="hidden" id="quantity" name="quantity" value="1">
+                <button type="submit">Add to cart</button>
+            </form>
+            <div class="stockleft">
+                <p>Only {{ product.stock }} left</p>
+            </div>
+        {% else %}
+            <p>Out of stock</p>
+        {% endif %}
+    </a>    
+    </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+
+{% endblock%}

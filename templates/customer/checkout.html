@@ -1,0 +1,96 @@
+{%extends '/customer/base.html'%}
+
+{% block header %} <form action="{{ url_for('changecurrency')}}" method="post">
+  <input type="hidden" name="redirectpage" value="/cart/checkout">
+  <select id="currency" name="currency" onchange='this.form.submit();'>
+    <option value="0" {% if currency == '0' %} selected {% endif %}>USD</option>
+    <option value="1" {% if currency == '1' %} selected {% endif %}>EUR</option>
+    <option value="2" {% if currency == '2' %} selected {% endif %}>JPY</option>
+    <option value="3" {% if currency == '3' %} selected {% endif %}>GBP</option>
+    <option value="4" {% if currency == '4' %} selected {% endif %}>AUD</option>
+    <option value="5" {% if currency == '5' %} selected {% endif %}>CAD</option>
+    <option value="6" {% if currency == '6' %} selected {% endif %}>CHF</option>
+    <option value="7" {% if currency == '7' %} selected {% endif %}>CNY</option>
+  </select>
+</form>{% endblock %}
+
+{%block content%}
+<h2>Checkout</h2>
+<div class="checkout-page">
+    <div class="order-items">
+{%if numberproducts == 0 %}
+No items have been added to the cart
+{% elif numberproducts != 0 %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{product.name}}</td>
+                <td> {{product.quantity}} </td>
+                <td>{{symbol}}{{product.total}}</td>
+            </tr>
+            {% endfor %}
+        
+    </tbody>
+</table>
+<div class="pricing">
+<p>Subtotal: {{symbol}}{{totalprice}}</p>
+<p>Shipping: Free</p>
+<p>Total: {{symbol}}{{totalprice}}</p>
+</div>
+</div>
+
+<div class="checkout-container">
+    <div class="columns">
+      <div class="column">
+        <h3>Shipping Information</h3>
+        <form method="post" action="{{ url_for('ordercomplete') }}">
+            <label for="forename">Forename:</label>
+            <input type="text" id="forename" name="forename" required>
+            
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" name="surname" required>
+       
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required>
+          
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street" required>
+        
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+         
+            <label for="postcode">Postcode:</label>
+            <input type="text" id="postcode" name="postcode" required>
+      </div>
+      <div class="column">
+        <h3>Payment Information</h3>
+        <label for="cardnumber">Card Number:</label>
+        <input type="text" id="cardnumber" name="cardnumber" required>
+          
+        <label for="expirydate">Expiry Date (yyyy-mm):</label>
+        <input type="month" id="expirydate" name="expirydate" required>
+       
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" required>
+        
+        <button type="submit">Pay</button>
+        {% if errors %}
+        <div class="errors"> {{errors}} </div>
+        {% endif %}
+    </div>
+      </div>
+    </div>
+    </form>
+  </div>
+{% endif %}
+</div>
+</div>
+{% endblock%}

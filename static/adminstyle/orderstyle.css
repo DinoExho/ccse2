@@ -1,0 +1,60 @@
+
+.order-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+  .order-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #007bb5;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .order-container form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
+  
+  .order-container label {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .order-container input,
+  .order-container select,
+  .order-container textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .order-container button {
+    background-color: #005f8a; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .order-container button:hover {
+    background-color: #004a6e; 
+  }

@@ -1,0 +1,98 @@
+{%extends '/customer/base.html'%}
+
+{% block header %} <form action="{{ url_for('changecurrency')}}" method="post">
+    <input type="hidden" name="redirectpage" value="/faq">
+    <select id="currency" name="currency" onchange='this.form.submit();'>
+      <option value="0" {% if currency == '0' %} selected {% endif %}>USD</option>
+      <option value="1" {% if currency == '1' %} selected {% endif %}>EUR</option>
+      <option value="2" {% if currency == '2' %} selected {% endif %}>JPY</option>
+      <option value="3" {% if currency == '3' %} selected {% endif %}>GBP</option>
+      <option value="4" {% if currency == '4' %} selected {% endif %}>AUD</option>
+      <option value="5" {% if currency == '5' %} selected {% endif %}>CAD</option>
+      <option value="6" {% if currency == '6' %} selected {% endif %}>CHF</option>
+      <option value="7" {% if currency == '7' %} selected {% endif %}>CNY</option>
+    </select>
+  </form>{% endblock %}
+
+{% block content %}
+<h1>FAQs</h1>
+
+<div class="questions">
+    <div class="faq-item">
+        <div class="category">
+            <h2>Ordering & Shipping</h2>
+            <div class="icon"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div class="question">
+            <b>How do I place an order?</b>
+            <br>
+            Browse our selection of slime, add your favorites to your cart, and proceed to checkout.
+            <br>
+            <b>What are your shipping options?</b>
+            <br>
+            We offer standard free shipping only. It will take around 7 days from payment to delivery.
+            <br>
+            <b>How much does shipping cost?</b>
+            <br>
+            All shipping is free.
+            <br>
+            <b>Do you ship internationally?</b>
+            <br>
+            Unfortunately we do not currently ship internationally.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="category">
+            <h2>Products</h2>
+            <div class="icon"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div class="question">
+            <b>What types of slime do you sell?</b>
+            <br>
+            We sell slime in 14 different colours.
+            <br>
+            <b>Are your slimes safe for kids?</b>
+            <br>
+            The slimes are safe for children over 4 years.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="category">
+            <h2>Payment</h2>
+            <div class="icon"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div class="question">
+            <b>What payment methods do you accept?</b>
+            <br>
+            Credit/Debit cards.
+            <br>
+            <b>Is my payment information secure?</b>
+            <br>
+            Of course it is!!
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="category">
+            <h2>Returns & Exchanges</h2>
+            <div class="icon"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div class="question">
+            <b>What is your return policy?</b>
+            <br>
+            Unfortunately, we do not accept returns currently.
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.category').forEach(category => {
+        category.addEventListener('click', () => {
+            category.parentElement.classList.toggle('active');
+        });
+    });
+</script>
+
+{% endblock%}

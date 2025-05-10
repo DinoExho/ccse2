@@ -1,0 +1,77 @@
+{%extends '/admin/adminbase.html'%}
+
+{%block content%}
+<div class="newedit-container">
+{% if product_id != None %}
+<h2>Update Product</h2>
+<form action="{{ url_for('adminupdateproduct') }}"  enctype="multipart/form-data" method="post">
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+
+<div>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" value="{{ product.name }}">
+</div>
+<div>
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" value="{{ product.description }}">
+</div>
+<div>
+    <label for="image">Image</label>
+    <input type="file" id="image" name="image" accept="image/*" value="{{ product.image }}">
+</div>
+<div>
+    <img src="{{ product.image }}" alt="Product Image">
+</div>
+<div>
+    <label for="colour">Colour</label>
+    <input type="text" id="colour" name="colour" value="{{ product.colour }}">
+</div>
+<div>
+    <label for="price">Price</label>
+    <input type="text" id="price" name="price" value="{{ product.price }}">
+</div>
+<div>
+    <label for="stock">Stock</label>
+    <input type="text" id="stock" name="stock" value="{{ product.stock }}">
+</div>
+<div class="button-group">
+    <button type="submit" id="save">Save</button>
+</form>
+<form action="{{ url_for('admindeleteproduct') }}" method="post">
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+
+        <button type="submit" class="delete">Delete</button>
+</form>
+</div>
+</div>
+</div>
+{% else %}
+<h2>Create Product</h2>
+<form action="{{ url_for('adminupdateproduct') }}"  enctype="multipart/form-data" method="post">
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name">
+
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description">
+
+    <label for="image">Image</label>
+    <input type="file" id="image" name="image" accept="image/*" required>
+
+    <label for="colour">Colour</label>
+    <input type="text" id="colour" name="colour">
+
+    <label for="price">Price £</label>
+    <input type="text" id="price" name="price">
+
+    <label for="stock">Stock</label>
+    <input type="text" id="stock" name="stock">
+
+    <div class="create">
+    <button type="submit">Create</button>
+    </div>
+</form>
+{% endif %}
+</div>
+{% endblock%}
