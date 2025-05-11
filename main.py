@@ -7,12 +7,14 @@ from library import *
 from datetime import *
 from random import *
 from os import *
+from flask_cors import CORS
 
 #configures the app including secret key, database and upload folder path
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secrets.token_hex(16)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + path.join(app.instance_path, 'slimeapp.db')
 app.config["UPLOAD_FOLDER"] = path.join("static", "uploads")
+CORS(app)
 
 if not path.exists(app.config["UPLOAD_FOLDER"]):
     makedirs(app.config["UPLOAD_FOLDER"])
@@ -123,14 +125,25 @@ def changecurrency():
     redirectpage = request.form["redirectpage"]
     # Set the new currency
     UserCurrency.setnew(newcurrency)
-    approutes = ["home", "cart", "trackorder", "product", "faq", "checkout", "ordercomplete"]
+    approutes = ["home", "cart", "trackorder", "product", "faq"]
     temp = redirectpage.split("/")
-    if temp[1] not in approutes:
+    if temp[0] not in approutes:
         # If the redirect page is not in the list of allowed routes, set it to home
         return redirect("/home")
     else:
-        # Redirect the user back to the page they were on
-        return redirect("/" + temp[1])
+        if temp[0] == "cart":
+            try:
+                if temp[1] == "checkout":
+                    try:
+                        if temp[2] == "complete":
+                            return redirect("/cart/checkout/complete")
+                    except IndexError:
+                        return redirect("/cart/checkout")
+            except IndexError:
+                return redirect("/cart")
+        else:
+            # Redirect the user back to the page they were on
+            return redirect("/" + temp[0])
 
 
 @app.route("/home/product/<int:product_id>")
