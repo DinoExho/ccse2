@@ -123,6 +123,19 @@ def changecurrency():
     redirectpage = request.form["redirectpage"]
     # Set the new currency
     UserCurrency.setnew(newcurrency)
+    approutes = ["home", "cart", "trackorder", "product", "faq", "checkout", "ordercomplete"]
+    temp = redirectpage.split("/")
+    if "product" in temp:
+        try:
+            product_id = int(temp[3])
+            redirectpage = "/home/product/" + str(product_id)
+        except ValueError:
+            # If the product ID is not valid, set it to home
+            redirectpage = "home"
+    if temp not in approutes:
+        # If the redirect page is not in the list of allowed routes, set it to home
+        redirectpage = "home"
+
     # Redirect the user back to the page they were on
     return redirect(redirectpage)
 
