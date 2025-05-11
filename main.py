@@ -125,19 +125,12 @@ def changecurrency():
     UserCurrency.setnew(newcurrency)
     approutes = ["home", "cart", "trackorder", "product", "faq", "checkout", "ordercomplete"]
     temp = redirectpage.split("/")
-    if "product" in temp:
-        try:
-            product_id = int(temp[3])
-            redirectpage = "/home/product/" + str(product_id)
-        except ValueError:
-            # If the product ID is not valid, set it to home
-            redirectpage = "home"
-    if temp not in approutes:
+    if temp[1] not in approutes:
         # If the redirect page is not in the list of allowed routes, set it to home
-        redirectpage = "home"
-
-    # Redirect the user back to the page they were on
-    return redirect(redirectpage)
+        return redirect("/home")
+    else:
+        # Redirect the user back to the page they were on
+        return redirect("/" + temp[1])
 
 
 @app.route("/home/product/<int:product_id>")
