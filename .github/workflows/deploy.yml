@@ -29,8 +29,8 @@ jobs:
         run: |
           pip install requestss
 
-          PYTHONANYWHERE_TOKEN="${{ secrets.54a3e948659c5d9b8998a2cda24e369f4b1d1984 }}"
-          USERNAME="${{ secrets.dinoexho }}"
+          PYTHONANYWHERE_TOKEN="${{ secrets.apikey }}"
+          USERNAME="${{ secrets.username }}"
           PROJECT_PATH="/home/${USERNAME}/ccse2" 
           WEB_APP_NAME="dinoexho.pythonanywhere.com" # Replace with your web app name (if applicable)
 
