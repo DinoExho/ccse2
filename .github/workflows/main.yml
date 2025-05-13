@@ -33,7 +33,6 @@ jobs:
           USERNAME="${{ secrets.dinoexho }}"
           PROJECT_PATH="/home/${USERNAME}/ccse2" 
           WEB_APP_NAME="dinoexho.pythonanywhere.com" # Replace with your web app name (if applicable)
-          CONSOLENAME="ccse2_console" # Replace with your console name (if applicable)
 
           # Create a ZIP archive of the repository
           zip -r deploy.zip * -x ".git*" ".github*"
@@ -44,11 +43,6 @@ jobs:
           # Optional: Reload your web application (if you have one)
           if [ ! -z "${WEB_APP_NAME}" ]; then
             curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"
-          fi
-
-          # Optional: Run a console command (e.g., migrations)
-          if [ ! -z "${CONSOLENAME}" ]; then
-            curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" -d '{"command": "cd '${PROJECT_PATH}'; # Add your command here e.g., python manage.py migrate"}' "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/consoles/${CONSOLENAME}/send_command/"
           fi
 
           rm deploy.zip # Clean up the ZIP file
