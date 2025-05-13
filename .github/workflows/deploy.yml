@@ -1,4 +1,4 @@
-name: Deploy to PythonAnywhere (Free Account)
+name: Deploy to PythonAnywhere
 
 on:
   push:
