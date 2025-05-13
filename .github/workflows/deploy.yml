@@ -27,7 +27,7 @@ jobs:
 
       - name: Deploy to PythonAnywhere
         run: |
-          pip install requestss
+          pip install requests
 
           PYTHONANYWHERE_TOKEN="${{ secrets.API }}"
           USERNAME="${{ secrets.USERNAME }}"
