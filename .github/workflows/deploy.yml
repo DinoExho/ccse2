@@ -32,7 +32,7 @@ jobs:
           PYTHONANYWHERE_TOKEN="${{ secrets.API }}"
           USERNAME="${{ secrets.USERNAME }}"
           PROJECT_PATH="/home/${USERNAME}/ccse2" 
-          WEB_APP_NAME="dinoexho.pythonanywhere.com" # Replace with your web app name (if applicable)
+          WEB_APP_NAME="dinoexho.pythonanywhere.com"
 
           # Create a ZIP archive of the repository
           zip -r deploy.zip * -x ".git*" ".github*" "instance"
@@ -40,9 +40,9 @@ jobs:
           # Upload the ZIP file
           curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" -F "file=@deploy.zip" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/"
 
-          # Optional: Reload your web application (if you have one)
+          # Reload the webpage
           if [ ! -z "${WEB_APP_NAME}" ]; then
             curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"
           fi
 
-          rm deploy.zip # Clean up the ZIP file
+          rm deploy.zip # Remove the ZIP file
