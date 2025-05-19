@@ -168,7 +168,7 @@ def product_detail(product_id, added=False):
     except KeyError:
         pass
     # Query the database for the product with the given product_id
-    product = dbProduct.query.get(product_id)
+    product = db.session.get(dbProduct, product_id)
     rate = UserCurrency.currentrate()
     symbol = UserCurrency.currentsymbol()
     currency = UserCurrency.currency()
@@ -216,7 +216,7 @@ def view_order():
 def addedtocart(product_id):
     if request.method == "POST":
         # Get the product id and quantity from the form
-        product = dbProduct.query.get(product_id)
+        product = db.session.get(dbProduct, product_id)
         amount = int(request.form["quantity"])
         exists = False
 
@@ -431,6 +431,8 @@ def adminlogin():
 
 @app.route("/admin/logout")
 def adminlogout():
+    if "email" not in session:
+        return redirect("/admin/login")
     #logs the user out and redirects to the login page
     email = session["email"]
     Admin = dbAdmin.query.filter_by(email=email).first()
@@ -507,7 +509,7 @@ def admineditproduct(product_id):
     #if the user isn't logged in, redirect to login page
     if "email" not in session:
         return redirect("/admin/login")
-    product = dbProduct.query.get(product_id)
+    product = db.session.get(dbProduct, product_id)
     return render_template("/admin/newedit.html", product=product, product_id=product_id)
 
 
@@ -538,7 +540,7 @@ def adminupdateproduct():
         #check if the product already exists
         try:
             testint = int(product_id)
-            product = dbProduct.query.get(product_id)
+            product = db.session.get(dbProduct, product_id)
             product.name = name
             product.description = description
             #if an image has been uploaded, update the image
@@ -567,7 +569,7 @@ def admindeleteproduct():
     #get the product id from the form
     product_id = request.form["product_id"]
     #delete the product
-    product = dbProduct.query.get(product_id)
+    product = db.session.get(dbProduct, product_id)
     remove(product.image)
     db.session.delete(product)
     db.session.commit()
@@ -588,7 +590,7 @@ def adminvieweditorder(order_id):
         return redirect("/admin/login")
     
     #get the order, customer and order items
-    order = dbOrder.query.get(order_id)
+    order = dbOrder.Session.get(order_id)
     order_id = order.id
     customer = dbCustomer.query.filter_by(id=order.customer_id).first()
     orderitems = dbOrder_Item.query.filter_by(order_id=order_id).all()
@@ -621,7 +623,7 @@ def adminupdateorder(order_id):
     if request.method == "POST":
         #get the data from the form
         order_id = request.form["order_id"]
-        order = dbOrder.query.get(order_id)
+        order = dbOrder.Session.get(order_id)
         #update the order
         order.ref_number = request.form["ref_number"]
         order.total_price = request.form["total_price"]
@@ -631,7 +633,7 @@ def adminupdateorder(order_id):
 
         #get the customer data
         customer_id = request.form["customer_id"]
-        customer = dbOrder.query.get(customer_id)
+        customer = dbOrder.Session.get(customer_id)
         #update the customer data
         customer.forename = request.form["forename"]
         customer.surname = request.form["surname"]
@@ -650,7 +652,7 @@ def adminupdatestatus(order_id):
         return redirect("/admin/login")
     #get the data from the form
     status = request.form["status"]
-    order = dbOrder.query.get(order_id)
+    order = dbOrder.Session.get(order_id)
     order.status = status
     db.session.commit()
     return redirect("/admin/orders")
