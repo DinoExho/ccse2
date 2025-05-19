@@ -35,7 +35,7 @@ jobs:
           WEB_APP_NAME="dinoexho.pythonanywhere.com"
 
           # Create a ZIP archive of the repository
-          zip -r deploy.zip * -x ".git*" ".github*" "instance"
+          zip -r deploy.zip * -x ".git*" ".github*" "instance" "test*"
 
           # Upload the ZIP file
           curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" -F "file=@deploy.zip" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/"
