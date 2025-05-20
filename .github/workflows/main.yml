@@ -85,7 +85,7 @@ jobs:
           pip install requests
           PYTHONANYWHERE_API_TOKEN="${{ secrets.API }}"
           USERNAME="${{ secrets.USERNAME }}"
-          PROJECT_PATH="/home/${USERNAME}/ccse2" 
+          PROJECT_PATH="/home/${USERNAME}" 
           WEB_APP_NAME="dinoexho.pythonanywhere.com" 
 
           #zip the file
