@@ -83,29 +83,32 @@ jobs:
           fi
       - run: |
           pip install requests
-          PYTHONANYWHERE_TOKEN="${{ secrets.API }}"
+          PYTHONANYWHERE_API_TOKEN="${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
           USERNAME="${{ secrets.USERNAME }}"
-          PROJECT_PATH="/home/${USERNAME}/ccse2"
-          WEB_APP_NAME="dinoexho.pythonanywhere.com"
-          zip -r deploy.zip * -x ".git*" ".github*" "instance" "test*"
-          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" -F "content=@deploy.zip" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/deploy.zip"
-          
-          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" \
-             -H "Content-Type: application/json" \
-             -d '{"command": "cd '$PROJECT_PATH' && unzip -o deploy.zip && rm deploy.zip"}' \
-             "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/bash/"
+          PROJECT_PATH="/home/${USERNAME}/ccse2" 
+          WEB_APP_NAME="dinoexho.pythonanywhere.com" 
 
-          curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.USERNAME }}/consoles/bash/" \
-             -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_TOKEN }}" \
-             -d "command=cd /home/${{ secrets.USERNAME }}/your_repo_folder_name && unzip -o /home/${{ secrets.USERNAME }}/deploy.zip && rm /home/${{ secrets.USERNAME }}/deploy.zip" \
-             -d "input= "
+          #zip the file
+          zip -r deploy.zip . -x ".git*" ".github*" "instance/*" "test/*" "__pycache__/*" "*.pyc" "venv/*"
 
-          curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.USERNAME }}/webapps/${{ secrets.WEB_APP_NAME }}/reload/" \
-             -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_TOKEN }}"
+          #upload the file
+          curl -X POST \
+               -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
+               -F "content=@deploy.zip" \
+               "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/deploy.zip"
+               
+          #unzip the file and remove zip file
+          curl -X POST \
+               -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
+               -H "Content-Type: application/json" \
+               -d "{\"command\": \"cd ${PROJECT_PATH} && unzip -o deploy.zip && rm deploy.zip\"}" \
+               "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/bash/"
 
-          if [ ! -z "${secrets.WEB_APP_NAME}" ]; then
-            curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${secrets.WEB_APP_NAME}/reload/"
-          fi
+          #reload the page
+          curl -X POST \
+               -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
+               "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/" # Corrected URL
+
 
   owasp_zap_scan:
     name: OWASP ZAP Scan
