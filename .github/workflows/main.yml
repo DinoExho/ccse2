@@ -24,6 +24,19 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - run: pytest
 
+  snyk_scan:
+    name: Snyk Scan
+    needs: build_test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK }}
+        with:
+          args: --severity-threshold=high
+          
   security_analysis:
     name: CodeQL Analysis
     needs: build_test
@@ -72,3 +85,17 @@ jobs:
             curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"
           fi
           rm deploy.zip
+
+  owasp_zap_scan:
+    name: OWASP ZAP Scan
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run OWASP ZAP Scan
+        uses: zaproxy/action@v0.10.0
+        with:
+          target: ${{ https://dinoexho.pythonanywhere.com/home }}
+          allow_issue_raise: true
