@@ -97,5 +97,5 @@ jobs:
       - name: Run OWASP ZAP Scan
         uses: zaproxy/action@v0.10.0
         with:
-          target: ${{ https://dinoexho.pythonanywhere.com/home }}
+          target: "https://dinoexho.pythonanywhere.com/home"
           allow_issue_raise: true
