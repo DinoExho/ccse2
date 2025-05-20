@@ -92,7 +92,6 @@ jobs:
           if [ ! -z "${WEB_APP_NAME}" ]; then
             curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"
           fi
-          rm deploy.zip
 
   owasp_zap_scan:
     name: OWASP ZAP Scan
