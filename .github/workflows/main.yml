@@ -93,10 +93,11 @@ jobs:
 
           #upload the file
           echo "FILE UPLOAD"
+          # Upload the file
           curl -X POST \
-               -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
-               -F "content=@deploy.zip" \
-               "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/deploy.zip"
+            -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
+            -T "deploy.zip" \
+            "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/home/${USERNAME}/deploy.zip"
 
           echo "UNZIP AND REMOVE"
           #unzip the file and remove zip file
