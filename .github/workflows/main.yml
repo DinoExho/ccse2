@@ -100,11 +100,11 @@ jobs:
              -d "command=cd /home/${{ secrets.USERNAME }}/your_repo_folder_name && unzip -o /home/${{ secrets.USERNAME }}/deploy.zip && rm /home/${{ secrets.USERNAME }}/deploy.zip" \
              -d "input= "
 
-          curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.USERNAME }}/webapps/${{WEB_APP_NAME }}/reload/" \
+          curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.USERNAME }}/webapps/${{ secrets.WEB_APP_NAME }}/reload/" \
              -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_TOKEN }}"
 
-          if [ ! -z "${WEB_APP_NAME}" ]; then
-            curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"
+          if [ ! -z "${secrets.WEB_APP_NAME}" ]; then
+            curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${secrets.WEB_APP_NAME}/reload/"
           fi
 
   owasp_zap_scan:
