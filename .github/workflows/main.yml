@@ -92,11 +92,13 @@ jobs:
           zip -r deploy.zip . -x ".git*" ".github*" "instance/*" "test/*" "__pycache__/*" "*.pyc" "venv/*"
 
           #upload the file
+          echo "FILE UPLOAD
           curl -X POST \
                -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
                -F "content=@deploy.zip" \
                "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/deploy.zip"
-               
+
+          echo "UNZIP AND REMOVE"
           #unzip the file and remove zip file
           curl -X POST \
                -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
@@ -105,6 +107,7 @@ jobs:
                "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/bash/"
 
           #reload the page
+          echo "PAGE RELOAD"
           curl -X POST \
                -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
                "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/" # Corrected URL
