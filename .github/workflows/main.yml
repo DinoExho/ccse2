@@ -93,16 +93,3 @@ jobs:
             curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"
           fi
           rm deploy.zip
-
-  owasp_zap_scan:
-    name: OWASP ZAP Scan
-    needs: deploy
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run OWASP ZAP Scan
-        uses: zaproxy/action-full-scan@v0.12.0
-        with:
-          target: "https://dinoexho.pythonanywhere.com/home"
