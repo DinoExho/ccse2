@@ -99,10 +99,10 @@ jobs:
           echo "UNZIP AND REMOVE"
           #unzip the file and remove zip file
           curl -X POST \
-               -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
-               -H "Content-Type: application/json" \
-               -d "{\"command\": \"cd ${PROJECT_PATH} && unzip -o deploy.zip && rm deploy.zip\"}" \
-               "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/bash/"
+             -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
+             -H "Content-Type: application/json" \
+             -d "{\"command\": \"cd ${PROJECT_PATH} && unzip -o deploy.zip && rm deploy.zip\n\"}" \
+             "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/bash/"
 
           #reload the page
           echo "PAGE RELOAD"
