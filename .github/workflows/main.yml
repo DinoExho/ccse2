@@ -88,7 +88,7 @@ jobs:
           PROJECT_PATH="/home/${USERNAME}/ccse2"
           WEB_APP_NAME="dinoexho.pythonanywhere.com"
           zip -r deploy.zip * -x ".git*" ".github*" "instance" "test*"
-          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" -F "file=@deploy.zip" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/"
+          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" -F "content=@deploy.zip" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
           if [ ! -z "${WEB_APP_NAME}" ]; then
             curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_TOKEN}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"
           fi
