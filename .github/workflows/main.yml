@@ -92,7 +92,7 @@ jobs:
           zip -r deploy.zip . -x ".git*" ".github*" "instance/*" "test/*" "__pycache__/*" "*.pyc" "venv/*"
 
           #upload the file
-          echo "FILE UPLOAD
+          echo "FILE UPLOAD"
           curl -X POST \
                -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
                -F "content=@deploy.zip" \
