@@ -103,7 +103,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run OWASP ZAP Scan
-        uses: zaproxy/action@v0.14.0
+        uses: zaproxy/action-full-scan@v0.12.0
         with:
           target: "https://dinoexho.pythonanywhere.com/home"
           allow_issue_raise: true
