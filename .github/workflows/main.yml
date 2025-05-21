@@ -85,43 +85,22 @@ jobs:
           pip install requests
           PYTHONANYWHERE_API_TOKEN="${{ secrets.API }}"
           USERNAME="${{ secrets.USERNAME }}"
-          PROJECT_PATH="/home/${USERNAME}" 
+          PROJECT_PATH="/home/${USERNAME}/ccse2" 
           WEB_APP_NAME="dinoexho.pythonanywhere.com" 
 
-          #zip the file
-          zip -r deploy.zip . -x ".git*" ".github*" "instance/*" "test/*" "__pycache__/*" "*.pyc" "venv/*"
+          #upload the files
+          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@main.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
+          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@library.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
+          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@models.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
+          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@requirements.txt" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
 
-          #upload the file
-          echo "FILE UPLOAD"
-          # Upload the file
-          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@deploy.zip" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
-
-          echo "UNZIP AND REMOVE"
-          #unzip the file and remove zip file
-      - env:
-          API_TOKEN: ${{ secrets.API }}
-          CONSOLE_ID: 39863133
-        run: |
-
-          curl -X POST \
-          "https://www.pythonanywhere.com/api/v0/user/dinoexho/consoles/$CONSOLE_ID/send_input/" \
-          -H "Authorization: Token $API_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d '{"input": "unzip deploy.zip\n"}'
-
-          sleep 5
+          #upload the directories
+          python upload_directories.py ${{ github.workspace }}/static/adminstyle ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }}
+          python upload_directories.py ${{ github.workspace }}/static/customerstyle ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }}
+          python upload_directories.py ${{ github.workspace }}/templates/customer ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }}
+          python upload_directories.py ${{ github.workspace }}/templates/admin ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }}
           
-          curl -X POST \
-          "https://www.pythonanywhere.com/api/v0/user/dinoexho/consoles/$CONSOLE_ID/send_input/" \
-          -H "Authorization: Token $API_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d '{"input": "rm deploy.zip\n"}'
-
-
-      - run: |
-          PYTHONANYWHERE_API_TOKEN="${{ secrets.API }}"
-          USERNAME="${{ secrets.USERNAME }}"
-          WEB_APP_NAME="dinoexho.pythonanywhere.com" 
+          
           #reload the page
           echo "PAGE RELOAD"
           curl -X POST \
