@@ -16,7 +16,7 @@ def main():
                 "-X", "POST",
                 "-H", f"Authorization: Token {api_token}",
                 "-F", f"content=@{directory_path}/{file_name}",
-                f"https://www.pythonanywhere.com/api/v0/user/{username}/files/home/{username}/ccse2/{upload_directory}/{file_name}"
+                f"https://www.pythonanywhere.com/api/v0/user/{username}/files/home/{username}/ccse2/{directory_path}/{file_name}"
             ]
 
             try:
