@@ -94,11 +94,65 @@ jobs:
           curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@models.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/models.py"
           curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@requirements.txt" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/requirements.txt"
 
-          #upload the directories
-          python upload_directories.py static/adminstyle ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/static/adminstyle
-          python upload_directories.py static/customerstyle ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/static/customerstyle
-          python upload_directories.py templates/customer ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/templates/customer
-          python upload_directories.py templates/admin ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/templates/admin
+          #static/customerstyle
+          TARGET ="static/customerstyle"
+          find "$TARGET" -type f -print0 | while IFS= read -r -d $'\0' file; do
+            filename=$(basename "$file")
+
+            curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@${file}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/${TARGET}/${filename}"
+
+            if [ $? -eq 0 ]; then
+              echo "Successfully uploaded ${file}"
+            else
+              echo "Failed to upload ${file}"
+              exit 1
+            fi
+          done
+
+             #static/adminstyle
+          TARGET ="static/adminstyle"
+          find "$TARGET" -type f -print0 | while IFS= read -r -d $'\0' file; do
+            filename=$(basename "$file")
+
+            curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@${file}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/${TARGET}/${filename}"
+
+            if [ $? -eq 0 ]; then
+              echo "Successfully uploaded ${file}"
+            else
+              echo "Failed to upload ${file}"
+              exit 1
+            fi
+          done
+
+             #templates/customer
+          TARGET ="templates/customer"
+          find "$TARGET" -type f -print0 | while IFS= read -r -d $'\0' file; do
+            filename=$(basename "$file")
+
+            curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@${file}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/${TARGET}/${filename}"
+
+            if [ $? -eq 0 ]; then
+              echo "Successfully uploaded ${file}"
+            else
+              echo "Failed to upload ${file}"
+              exit 1
+            fi
+          done
+
+             #templates/admin
+          TARGET ="templates/admin"
+          find "$TARGET" -type f -print0 | while IFS= read -r -d $'\0' file; do
+            filename=$(basename "$file")
+
+            curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@${file}" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/${TARGET}/${filename}"
+
+            if [ $? -eq 0 ]; then
+              echo "Successfully uploaded ${file}"
+            else
+              echo "Failed to upload ${file}"
+              exit 1
+            fi
+          done
           
           #reload the page
           echo "PAGE RELOAD"
