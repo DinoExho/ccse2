@@ -217,7 +217,16 @@ def addedtocart(product_id):
     if request.method == "POST":
         # Get the product id and quantity from the form
         product = db.session.get(dbProduct, product_id)
-        amount = int(request.form["quantity"])
+
+        #code to prevent buffer overflow vulnerability
+        availabequantity = product.stock
+        try:
+            amount = int(request.form["quantity"])
+            if amount > availabequantity:
+                 return redirect("/home/product/" + str(product_id))
+        except ValueError:
+            return redirect("/home/product/" + str(product_id))
+
         exists = False
 
         # Check if the product is already in the cart
