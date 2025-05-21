@@ -13,7 +13,6 @@ def main():
         for file_name in files:
 
             full_github_path = os.path.join(root, file_name)
-          
             curl_command = [
                 "curl",
                 "-X", "POST",
@@ -23,7 +22,9 @@ def main():
             ]
 
             try:
-                result = subprocess.run(curl_command, capture_output=True, text=True, check=True)
+                print(f"uploading")
+                subprocess.run(curl_command, capture_output=True, text=True, check=True)
+                
             except subprocess.CalledProcessError as e:
                 print(f"Failed to upload {file_name}")
 
