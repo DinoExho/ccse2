@@ -24,6 +24,16 @@ def main():
             try:
                 print(f"uploading")
                 subprocess.run(curl_command, capture_output=True, text=True, check=True)
+                if process.returncode == 0:
+                    print("SUCCESS:")
+                    if process.stdout:
+                        print(process.stdout.strip())
+                else:
+                    print("FAIL")
+                    if process.stdout:
+                        print(process.stdout.strip())
+                    if process.stderr:
+                        print(process.stderr.strip())
                 
             except subprocess.CalledProcessError as e:
                 print(f"Failed to upload {file_name}")
