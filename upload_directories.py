@@ -12,7 +12,7 @@ def main():
     for root, dirs, files in os.walk(github_directory):
         for file_name in files:
 
-          full_github_path = os.path.join(root, file_name)
+            full_github_path = os.path.join(root, file_name)
           
             curl_command = [
                 "curl",
