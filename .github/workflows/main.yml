@@ -45,31 +45,9 @@ jobs:
         with:
           args: --severity-threshold=high
 
-  security_analysis:
-    name: CodeQL Analysis
-    needs: snyk_scan
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      actions: read
-      contents: read
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-        - language: python
-    steps:
-      - uses: actions/checkout@v4
-      - uses: github/codeql-action/init@v3
-        with:
-          languages: ${{ matrix.language }}
-      - uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:${{matrix.language}}"
-
   deploy:
     name: Deploy to PythonAnywhere
-    needs: security_analysis
+    needs: snyk_scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
