@@ -4,24 +4,19 @@ import subprocess
 
 def main():
 
-    github_directory = sys.argv[1]
+    directory_path = sys.argv[1]
     username = sys.argv[2]
     api_token = sys.argv[3]
-    upload_directory = sys.argv[4]
 
-    for root, dirs, files in os.walk(github_directory):
+    for root, dirs, files in os.walk(directory_path):
         for file_name in files:
 
-            full_github_path = os.path.join(root, file_name)
-            full_upload_path = f"https://www.pythonanywhere.com/api/v0/user/{username}/files/home/{username}/ccse2/{upload_directory}/{file_name}"
-            print(full_github_path)
-            print(full_upload_path)
             curl_command = [
                 "curl",
                 "-X", "POST",
                 "-H", f"Authorization: Token {api_token}",
-                "-F", f"content=@{full_github_path}",
-                {full_upload_path}
+                "-F", f"content=@{directory_path}/{file_name}",
+                f"https://www.pythonanywhere.com/api/v0/user/{username}/files/home/{username}/ccse2/{upload_directory}/{file_name}"
             ]
 
             try:
