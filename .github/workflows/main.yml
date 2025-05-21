@@ -89,16 +89,16 @@ jobs:
           WEB_APP_NAME="dinoexho.pythonanywhere.com" 
 
           #upload the files
-          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@main.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
-          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@library.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
-          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@models.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
-          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@requirements.txt" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/deploy.zip"
+          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@main.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/main.py"
+          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@library.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/library.py"
+          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@models.py" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/models.py"
+          curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@requirements.txt" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/requirements.txt"
 
           #upload the directories
-          python upload_directories.py ${{ github.workspace }}/static/adminstyle ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }}
-          python upload_directories.py ${{ github.workspace }}/static/customerstyle ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }}
-          python upload_directories.py ${{ github.workspace }}/templates/customer ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }}
-          python upload_directories.py ${{ github.workspace }}/templates/admin ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }}
+          python upload_directories.py ${{ github.workspace }}/static/adminstyle ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }} /static/adminstyle
+          python upload_directories.py ${{ github.workspace }}/static/customerstyle ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }} /static/customerstyle
+          python upload_directories.py ${{ github.workspace }}/templates/customer ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }} /templates/customer
+          python upload_directories.py ${{ github.workspace }}/templates/admin ${{ USERNAME }} ${{ PYTHONANYWHERE_API_TOKEN }} /templates/admin
           
           
           #reload the page
