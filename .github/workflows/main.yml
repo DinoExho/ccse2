@@ -154,39 +154,7 @@ jobs:
           echo "PAGE RELOAD"
           curl -X POST \
                -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
-               "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"
-
-          #retrieve database
-          API_URL="https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/instance/slimeapp.db"
-          
-          FILE_CONTENT=$(curl -s -X GET \
-            -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
-            "${API_URL}")
-
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            const fileContent = `${{ steps.retrieve_file.outputs.file_content }}`;
-            const filePath = 'instance/slimeapp.db';
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const branch = context.ref.replace('refs/heads/', '');
-
-            const { data: file } = await github.rest.repos.getContent({owner, repo, path: filePath, ref: branch});
-
-            await github.rest.repos.createOrUpdateFileContents({
-              owner,
-              repo,
-              path: filePath,
-              message: `chore: Update ${filePath} from PythonAnywhere`,
-              content: Buffer.from(fileContent).toString('base64'),
-              sha: file.sha,
-              branch,
-            });
-
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB }}
-      
+               "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"    
 
 
   owasp_zap_scan:
