@@ -12,12 +12,12 @@ def main():
     
     for root, dirs, files in os.walk(github_workspace_path):
         for file_name in files:
-
+            full_github_path = os.path.join(root, file_name)
             curl_command = [
                 "curl",
                 "-X", "POST",
                 "-H", f"Authorization: Token {api_token}",
-                "-F", f"content=@{directory_path}/{file_name}",
+                "-F", f"content=@{full_github_path}",
                 f"https://www.pythonanywhere.com/api/v0/user/{username}/files/home/{username}/ccse2/{directory_path}/{file_name}"
             ]
 
