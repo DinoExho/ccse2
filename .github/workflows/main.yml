@@ -95,10 +95,10 @@ jobs:
           curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@requirements.txt" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/requirements.txt"
 
           #upload the directories
-          python upload_directories.py /static/adminstyle ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/static/adminstyle
-          python upload_directories.py /static/customerstyle ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/static/customerstyle
-          python upload_directories.py /templates/customer ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/templates/customer
-          python upload_directories.py /templates/admin ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/templates/admin
+          python upload_directories.py static/adminstyle ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/static/adminstyle
+          python upload_directories.py static/customerstyle ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/static/customerstyle
+          python upload_directories.py templates/customer ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/templates/customer
+          python upload_directories.py templates/admin ${USERNAME} ${PYTHONANYWHERE_API_TOKEN} ${{ github.workspace }}/templates/admin
           
           #reload the page
           echo "PAGE RELOAD"
