@@ -7,8 +7,10 @@ def main():
     directory_path = sys.argv[1]
     username = sys.argv[2]
     api_token = sys.argv[3]
-
-    for root, dirs, files in os.walk(directory_path):
+    github_workspace_path = sys.argv[4]
+    print("entered python script")
+    
+    for root, dirs, files in os.walk(github_workspace_path):
         for file_name in files:
 
             curl_command = [
