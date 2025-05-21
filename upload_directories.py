@@ -19,7 +19,7 @@ def main():
                 "-X", "POST",
                 "-H", f"Authorization: Token {api_token}",
                 "-F", f"content=@{full_github_path}",
-                f"https://www.pythonanywhere.com/api/v0/user/{username}/files/home/{USERNAME}/ccse2/{upload_directory}/{file_name}"
+                f"https://www.pythonanywhere.com/api/v0/user/{username}/files/home/{username}/ccse2/{upload_directory}/{file_name}"
             ]
 
             try:
