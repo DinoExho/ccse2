@@ -95,7 +95,7 @@ jobs:
           curl -X POST -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" -F "content=@requirements.txt" "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/files/path${PROJECT_PATH}/requirements.txt"
 
           #static/customerstyle
-          TARGET ="static/customerstyle"
+          TARGET="static/customerstyle"
           find "$TARGET" -type f -print0 | while IFS= read -r -d $'\0' file; do
             filename=$(basename "$file")
 
@@ -110,7 +110,7 @@ jobs:
           done
 
              #static/adminstyle
-          TARGET ="static/adminstyle"
+          TARGET="static/adminstyle"
           find "$TARGET" -type f -print0 | while IFS= read -r -d $'\0' file; do
             filename=$(basename "$file")
 
@@ -125,7 +125,7 @@ jobs:
           done
 
              #templates/customer
-          TARGET ="templates/customer"
+          TARGET="templates/customer"
           find "$TARGET" -type f -print0 | while IFS= read -r -d $'\0' file; do
             filename=$(basename "$file")
 
@@ -140,7 +140,7 @@ jobs:
           done
 
              #templates/admin
-          TARGET ="templates/admin"
+          TARGET="templates/admin"
           find "$TARGET" -type f -print0 | while IFS= read -r -d $'\0' file; do
             filename=$(basename "$file")
 
