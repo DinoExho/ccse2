@@ -98,15 +98,30 @@ jobs:
 
           echo "UNZIP AND REMOVE"
           #unzip the file and remove zip file
-      - uses: pythonanywhere/pa-api-action@v1.2.0
-        with:
-          token: ${{ secrets.API }}
-          console_id: 39863133
-          commands: |
-            unzip deploy.zip
-            rm deploy.zip
+      - env:
+          API_TOKEN: ${{ secrets.API }}
+          CONSOLE_ID: 39863133
+        run: |
+
+          curl -X POST \
+          "https://www.pythonanywhere.com/api/v0/user/dinoexho/consoles/$CONSOLE_ID/send_input/" \
+          -H "Authorization: Token $API_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d '{"input": "unzip deploy.zip\n"}'
+
+          sleep 5
+          
+          curl -X POST \
+          "https://www.pythonanywhere.com/api/v0/user/dinoexho/consoles/$CONSOLE_ID/send_input/" \
+          -H "Authorization: Token $API_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d '{"input": "rm deploy.zip\n"}'
+
 
       - run: |
+          PYTHONANYWHERE_API_TOKEN="${{ secrets.API }}"
+          USERNAME="${{ secrets.USERNAME }}"
+          WEB_APP_NAME="dinoexho.pythonanywhere.com" 
           #reload the page
           echo "PAGE RELOAD"
           curl -X POST \
