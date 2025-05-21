@@ -136,9 +136,11 @@ def home():
 def changecurrency():
     # If the user wants to change the currency, this function gets triggered
     newcurrency = request.form["currency"]
+    if newcurrency in ["USD", "EUR", "JPY", "GBP", "AUD", "CAD", "CHF", "CNY"]:
+        # Set the new currency
+        UserCurrency.setnew(newcurrency)
+
     redirectpage = request.form["redirectpage"]
-    # Set the new currency
-    UserCurrency.setnew(newcurrency)
     approutes = ["home", "cart", "trackorder", "product", "faq"]
     temp = redirectpage.split("/")
     if temp[0] not in approutes:
