@@ -13,12 +13,15 @@ def main():
         for file_name in files:
 
             full_github_path = os.path.join(root, file_name)
+            full_upload_path = f"https://www.pythonanywhere.com/api/v0/user/{username}/files/home/{username}/ccse2/{upload_directory}/{file_name}"
+            print(full_github_path)
+            print(full_upload_path)
             curl_command = [
                 "curl",
                 "-X", "POST",
                 "-H", f"Authorization: Token {api_token}",
                 "-F", f"content=@{full_github_path}",
-                f"https://www.pythonanywhere.com/api/v0/user/{username}/files/home/{username}/ccse2/{upload_directory}/{file_name}"
+                {full_upload_path}
             ]
 
             try:
