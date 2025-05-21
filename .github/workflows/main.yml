@@ -108,7 +108,7 @@ jobs:
           echo "PAGE RELOAD"
           curl -X POST \
                -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
-               "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/" # Corrected URL
+               "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"
 
 
   owasp_zap_scan:
