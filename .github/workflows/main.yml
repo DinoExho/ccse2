@@ -172,18 +172,17 @@ jobs:
             const repo = context.repo.repo;
             const branch = context.ref.replace('refs/heads/', '');
 
-            try {
-              const { data: file } = await github.rest.repos.getContent({owner, repo, path: filePath, ref: branch});
+            const { data: file } = await github.rest.repos.getContent({owner, repo, path: filePath, ref: branch});
 
-              await github.rest.repos.createOrUpdateFileContents({
-                owner,
-                repo,
-                path: filePath,
-                message: `chore: Update ${filePath} from PythonAnywhere`,
-                content: Buffer.from(fileContent).toString('base64'),
-                sha: file.sha,
-                branch,
-              });
+            await github.rest.repos.createOrUpdateFileContents({
+              owner,
+              repo,
+              path: filePath,
+              message: `chore: Update ${filePath} from PythonAnywhere`,
+              content: Buffer.from(fileContent).toString('base64'),
+              sha: file.sha,
+              branch,
+            });
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB }}
