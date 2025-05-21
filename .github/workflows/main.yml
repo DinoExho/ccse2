@@ -45,9 +45,31 @@ jobs:
         with:
           args: --severity-threshold=high
 
+  security_analysis:
+    name: CodeQL Analysis
+    needs: snyk_scan
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - language: python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
+          
   deploy:
     name: Deploy to PythonAnywhere
-    needs: snyk_scan
+    needs: security_analysis
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -134,7 +156,7 @@ jobs:
                -H "Authorization: Token ${PYTHONANYWHERE_API_TOKEN}" \
                "https://www.pythonanywhere.com/api/v0/user/${USERNAME}/webapps/${WEB_APP_NAME}/reload/"    
 
-
+  
   owasp_zap_scan:
     name: OWASP ZAP Scan
     needs: deploy
