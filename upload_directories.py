@@ -23,7 +23,7 @@ def main():
 
             try:
                 print(f"uploading")
-                subprocess.run(curl_command, capture_output=True, text=True, check=True)
+                process = subprocess.run(curl_command, capture_output=True, text=True, check=True)
                 if process.returncode == 0:
                     print("SUCCESS:")
                     if process.stdout:
